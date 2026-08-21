@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuxCart — AI-Powered Smart Shopping</title>
+  <meta name="description" content="Shop premium tech products with AI assistance. Secure Razorpay payments, smart search, and the best deals in India." />
+  <meta name="keywords" content="AI shopping, tech products, online store, Razorpay, India" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo">LUXCART</div>
+      <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="main-nav" class="nav">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" id="nav-logo">
+        <span class="logo-icon">◆</span>
+        <span class="logo-text">LuxCart</span>
+      </a>
+
+      <!-- AI-Powered Search Bar -->
+      <div class="nav-search-wrap">
+        <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="main-search-input" class="nav-search-input" placeholder="Search products or ask AI..." autocomplete="off" />
+        
+        <button id="ai-mode-btn" class="ai-mode-btn active" title="Toggle AI Mode">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+          AI
+        </button>
+
+        <button class="nav-search-clear" id="search-clear-btn" style="display:none;">✕</button>
+        <button class="nav-search-send" id="search-send-btn" aria-label="Search">
+          <!-- Sparkle icon by default since AI is active -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="m22 2-11 11"/></svg>
+        </button>
+      </div>
+
+      <div class="nav-actions">
+        <button class="nav-action-btn" id="wishlist-btn" aria-label="Wishlist">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span class="badge" id="wishlist-count" style="display:none">0</span>
+        </button>
+        <button class="nav-action-btn" id="cart-btn" aria-label="Shopping Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="badge" id="cart-count">0</span>
+        </button>
+        <button class="nav-action-btn hidden" id="user-btn" aria-label="User Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+        <button class="nav-action-btn nav-login-btn" id="login-nav-btn" aria-label="Login">
+          <span>Login</span>
+        </button>
+        <button class="nav-hamburger" id="hamburger-btn" aria-label="Toggle Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <!-- User Dropdown -->
+      <div class="user-dropdown" id="user-dropdown">
+        <div class="user-dropdown-name" id="user-dropdown-name">User</div>
+        <div class="user-dropdown-divider"></div>
+        <button class="user-dropdown-item" id="orders-nav-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+          My Orders
+        </button>
+        <div class="user-dropdown-divider"></div>
+        <button class="user-dropdown-item logout" id="logout-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Overlay -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-modal" id="auth-modal">
+      <button class="auth-close" id="auth-close" aria-label="Close Auth">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <div class="auth-logo">◆ LUXCART</div>
+      <h2 class="auth-title" id="auth-title">Login</h2>
+      <div class="auth-form">
+        <div class="auth-field" id="auth-name-field" style="display:none">
+          <label class="auth-label">Full Name</label>
+          <input id="auth-name" type="text" placeholder="Enter your name" autocomplete="name" />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Email</label>
+          <input id="auth-email" type="email" placeholder="Enter your email" autocomplete="email" />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label">Password</label>
+          <input id="auth-password" type="password" placeholder="Enter your password" autocomplete="current-password" />
+        </div>
+        <button class="btn btn-primary auth-submit" id="auth-submit-btn">
+          <span>Continue</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="auth-message" id="auth-message"></p>
+        <p class="auth-toggle">
+          <span id="auth-toggle-text">New here?</span>
+          <a id="auth-toggle-btn">Create account</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="hero-bg">
+        <div class="hero-gradient"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          AI-Powered Shopping
+        </div>
+        <h1 class="hero-title">
+          Discover Premium<br/>
+          <span class="hero-accent">Tech, Smarter</span>
+        </h1>
+        <p class="hero-subtitle">
+          50+ curated products. AI-powered search.<br/>
+          Secure payments via Razorpay.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="hero-stat-num">50+</span><span class="hero-stat-label">Products</span></div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat"><span class="hero-stat-num">7</span><span class="hero-stat-label">Categories</span></div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat"><span class="hero-stat-num">AI</span><span class="hero-stat-label">Powered</span></div>
+        </div>
+
+        <!-- Mobile Search Bar (visible only on mobile) -->
+        <div class="mobile-search-wrap">
+          <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="mobile-search-input" class="nav-search-input" placeholder="Search products or ask AI..." autocomplete="off" />
+          <button id="mobile-ai-mode-btn" class="ai-mode-btn active" title="Toggle AI Mode">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            AI
+          </button>
+          <button class="nav-search-send" id="mobile-search-send-btn" aria-label="Search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="m22 2-11 11"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-card reveal-up">
+            <div class="about-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+            </div>
+            <h3>AI Smart Search</h3>
+            <p>Type in the search bar above — "best headphones under ₹15,000" — and get AI-curated results instantly.</p>
+          </div>
+          <div class="about-card reveal-up">
+            <div class="about-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22V8"/><path d="m21 3-9 9"/><path d="M3 3l9 9"/></svg>
+            </div>
+            <h3>Compare with AI</h3>
+            <p>Select 2-3 products and our AI generates a detailed comparison with a verdict.</p>
+          </div>
+          <div class="about-card reveal-up">
+            <div class="about-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h3>Wishlist & Price Alerts</h3>
+            <p>Save products to your wishlist and set price alerts — get notified when prices drop.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Products Section -->
+    <section id="products" class="section products-section">
+      <div class="container">
+        <div class="products-toolbar">
+          <div class="toolbar-left">
+            <h2 class="toolbar-title" id="toolbar-title">All Products</h2>
+            <span class="toolbar-count" id="toolbar-count"></span>
+          </div>
+          <div class="toolbar-filters" id="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="audio">Audio</button>
+            <button class="filter-btn" data-filter="gaming accessories">Gaming</button>
+            <button class="filter-btn" data-filter="monitors">Monitors</button>
+            <button class="filter-btn" data-filter="storage">Storage</button>
+            <button class="filter-btn" data-filter="smartphones">Phones</button>
+            <button class="filter-btn" data-filter="laptops">Laptops</button>
+            <button class="filter-btn" data-filter="wearables">Wearables</button>
+          </div>
+        </div>
+        <div class="products-grid" id="products-grid"></div>
+        <div id="products-empty" class="products-empty" style="display:none">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <p>No products found</p>
+          <span>Try a different search or filter</span>
+          <button class="btn btn-outline" id="clear-search-btn" style="margin-top:1rem">Clear Search</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-simple">
+        <a href="#" class="nav-logo">
+          <span class="logo-icon">◆</span>
+          <span class="logo-text">LuxCart</span>
+        </a>
+        <p class="footer-tagline">AI-powered shopping. Secure payments via Razorpay.</p>
+        <p class="footer-copy">© 2026 LuxCart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3 class="cart-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        Your Cart
+        <span class="cart-item-count" id="cart-item-count">(0)</span>
+      </h3>
+      <button class="cart-close" id="cart-close" aria-label="Close Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <p>Your cart is empty</p>
+        <span>Add items to get started</span>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">₹0</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span class="shipping-free">FREE</span>
+        </div>
+        <div class="cart-summary-row cart-total">
+          <span>Total</span>
+          <span id="cart-total">₹0</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-checkout" id="checkout-btn">
+        <span>Checkout with Razorpay</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Product Quick View Modal -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="product-modal" id="product-modal">
+    <button class="modal-close" id="modal-close" aria-label="Close Modal">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="modal-body">
+      <div class="modal-image">
+        <img id="modal-product-image" src="" alt="" />
+      </div>
+      <div class="modal-info">
+        <span class="modal-category" id="modal-product-category"></span>
+        <h2 class="modal-product-name" id="modal-product-name"></h2>
+        <div class="modal-rating" id="modal-product-rating"></div>
+        <p class="modal-description" id="modal-product-description"></p>
+        <div class="modal-price">
+          <span class="modal-current-price" id="modal-product-price"></span>
+        </div>
+        <div class="modal-quantity">
+          <span class="modal-label">Quantity:</span>
+          <div class="quantity-selector">
+            <button class="qty-btn" id="qty-minus">−</button>
+            <span class="qty-value" id="qty-value">1</span>
+            <button class="qty-btn" id="qty-plus">+</button>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary btn-add-to-cart" id="modal-add-to-cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Modal -->
+  <div class="modal-overlay" id="orders-overlay"></div>
+  <div class="orders-modal" id="orders-modal">
+    <div class="orders-header">
+      <h3>My Orders</h3>
+      <button class="modal-close" id="orders-close" aria-label="Close Orders">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="orders-body">
+      <div class="ai-loading" id="orders-loading" style="display:none">
+        <div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>
+      </div>
+      <div class="orders-empty" id="orders-empty" style="display:none">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+        <p>No orders yet</p>
+        <span>Start shopping to see your orders here</span>
+      </div>
+      <div class="orders-list" id="orders-list"></div>
+    </div>
+  </div>
+
+  <!-- Compare Bar (floating bottom) -->
+  <div class="compare-bar" id="compare-bar" style="display:none">
+    <div class="compare-bar-info">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22V8"/><path d="m21 3-9 9"/><path d="M3 3l9 9"/></svg>
+      <span>Compare (<span id="compare-count">0</span> items)</span>
+    </div>
+    <div class="compare-bar-actions">
+      <button class="btn btn-outline compare-clear" id="compare-clear-btn">Clear</button>
+      <button class="btn btn-primary compare-now" id="compare-open-btn">
+        <span>Compare Now</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Compare Modal -->
+  <div class="modal-overlay" id="compare-overlay"></div>
+  <div class="compare-modal" id="compare-modal">
+    <div class="compare-header">
+      <h3>Product Comparison</h3>
+      <button class="modal-close" id="compare-close" aria-label="Close Compare">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="ai-loading" id="compare-loading" style="display:none"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>
+    <div class="compare-body" id="compare-body"></div>
+  </div>
+
+  <!-- Wishlist Modal -->
+  <div class="modal-overlay" id="wishlist-overlay"></div>
+  <div class="wishlist-modal" id="wishlist-modal">
+    <div class="compare-header">
+      <h3>My Wishlist</h3>
+      <button class="modal-close" id="wishlist-close" aria-label="Close Wishlist">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="wishlist-body" id="wishlist-body">
+      <!-- Items go here -->
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
